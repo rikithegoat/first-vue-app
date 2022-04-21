@@ -1,21 +1,53 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>{{ title }}</h1>
+  <teleport to=".modals" v-if="showModal">
+    <myModal theme='sale' @close='toggleModal'>
+      <template v-slot:links>
+        <a href="">sign up now</a>
+        <a href="">forgot your password?</a>
+      </template>
+      <h1>Free Giveaway today!</h1>
+      <p>Grab now or never!</p>
+    </myModal>
+  </teleport>
+
+  <teleport to=".modals" v-if="showModalTwo">
+    <myModal @close='toggleModalTwo'>
+      <h1>Free Giveaway today!</h1>
+      <p>Grab now or never!</p>
+    </myModal>
+  </teleport>
+
+  <button @click="toggleModal">Open Modal</button>
+  <button @click="toggleModalTwo">Open Modal 2</button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import myModal from './components/myModal.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {myModal},
+  data(){
+    return{
+      title: "My Frist Vue app",
+      showModal: false,
+      showModalTwo: false
+    }
+  },
+  methods:{
+    toggleModal(){
+      this.showModal= !this.showModal;
+    },
+    toggleModalTwo(){
+      this.showModalTwo = !this.showModalTwo;
+    }
   }
 }
 </script>
 
 <style>
-#app {
+#app, .modals {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
